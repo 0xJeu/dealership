@@ -164,9 +164,11 @@ public class UserInterface {
     public static void processRemoveVehicleRequest() {
         System.out.println("Please enter the Vin you would like to remove: ");
         int userVin = Integer.parseInt(keyboard.nextLine());
+        boolean vehicleFound = false;
 
         for (Vehicle vehicle : dealership.getAllVehicles()) {
             if (userVin == vehicle.getVin()) {
+                vehicleFound = true;
                 dealership.removeVehicle(vehicle);
                 System.out.println("Vehicle has been removed!");
                 DealershipFileManager.saveInventory(dealership);
@@ -174,5 +176,9 @@ public class UserInterface {
             }
         }
 
+        if (!vehicleFound) {
+            System.out.println("No VIN matching " + userVin + " is found.");
+        }
     }
+
 }
