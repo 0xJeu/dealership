@@ -8,7 +8,7 @@ public class Dealership {
     private String address;
     private String phone;
 
-    private ArrayList<Vehicle> inventory = DealershipFileManager.getInventory();
+    static ArrayList<Vehicle> inventory = new ArrayList<>();
 
     public Dealership() {
         this.name = "D & B Used Cars";
@@ -16,7 +16,19 @@ public class Dealership {
         this.phone = "817-555-5555";
     }
 
-    public List<Vehicle> GetVehiclesByPrice(double min, double max) {
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public List<Vehicle> getVehiclesByPrice(double min, double max) {
         List<Vehicle> filteredInventory = new ArrayList<>();
 //        System.out.println("Searching for vehicles between $" + min + " and $" + max); //Used for debug
 
@@ -47,7 +59,7 @@ public class Dealership {
         return filteredInventory;
     }
 
-    public List<Vehicle> GetVehiclesByYear(int minYear, int maxYear) {
+    public List<Vehicle> getVehiclesByYear(int minYear, int maxYear) {
         List<Vehicle> filteredInventory = new ArrayList<>();
 
         for (Vehicle vehicle : inventory) {
@@ -62,7 +74,7 @@ public class Dealership {
         return filteredInventory;
     }
 
-    public List<Vehicle> GetVehiclesByColor(String color) {
+    public List<Vehicle> getVehiclesByColor(String color) {
         List<Vehicle> filteredInventory = new ArrayList<>();
 
         for (Vehicle vehicle : inventory) {
@@ -76,11 +88,11 @@ public class Dealership {
         return filteredInventory;
     }
 
-    public List<Vehicle> GetVehiclesByMileage(int minMileage, int maxMileage) {
+    public List<Vehicle> getVehiclesByMileage(int minMileage, int maxMileage) {
         List<Vehicle> filteredInventory = new ArrayList<>();
 
         for (Vehicle vehicle : inventory) {
-            int mileage  = vehicle.getOdometer();
+            int mileage = vehicle.getOdometer();
             if (mileage >= minMileage && mileage <= maxMileage) {
                 filteredInventory.add(vehicle);
             }
@@ -91,7 +103,7 @@ public class Dealership {
         return filteredInventory;
     }
 
-    public List<Vehicle> GetVehiclesByVehicleType(String vehicleType) {
+    public List<Vehicle> getVehiclesByVehicleType(String vehicleType) {
         List<Vehicle> filteredInventory = new ArrayList<>();
 
         for (Vehicle vehicle : inventory) {
@@ -105,6 +117,18 @@ public class Dealership {
         return filteredInventory;
     }
 
+    public List<Vehicle> getAllVehicles() {
+        return inventory;
+    }
+
+    public void addVehicle(Vehicle vehicle) {
+        inventory.add(vehicle);
+    }
+
+    public void removeVehicle(Vehicle vehicle) {
+        inventory.remove(vehicle);
+
+    }
 
 
 }

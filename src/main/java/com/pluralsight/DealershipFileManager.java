@@ -1,16 +1,16 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
+
+import static com.pluralsight.Main.keyboard;
 
 public class DealershipFileManager {
 
 
-    public static ArrayList<Vehicle> getInventory(){
-        ArrayList<Vehicle> inventory = new ArrayList<>();
+    public static Dealership getDealership(){
+        Dealership dealership = new Dealership();
 
         try {
             FileReader fr = new FileReader("src/main/resources/inventory.csv");
@@ -34,7 +34,7 @@ public class DealershipFileManager {
                 double price = Double.parseDouble(lineSplit[7]);
 
 
-                inventory.add(new Vehicle(vin,year,make,model,vehicleType,color,odometer,price));
+                dealership.addVehicle(new Vehicle(vin,year,make,model,vehicleType,color,odometer,price));
             }
 
             br.close();
@@ -42,7 +42,25 @@ public class DealershipFileManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return inventory;
+        return dealership;
     }
+
+    public static void saveInventory(Dealership dealership) {
+        try {
+            BufferedWriter bufWriter = new BufferedWriter(new FileWriter("src/main/resources/inventory.csv"));
+
+            for (Vehicle vehicle : dealership.getAllVehicles()) {
+                //Format inventory entry and write to file
+                String inventoryEntry = String.format("%d|%d|%s|%s|%s|%s|%d|%.2f\n",vehicle.getVin(),vehicle.getYear(),vehicle.getMake(),vehicle.getModel(),vehicle.getVehicleType(),vehicle.getColor(), vehicle.getOdometer(),vehicle.getPrice());
+                bufWriter.write(inventoryEntry);
+            }
+
+            //Release file
+            bufWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
